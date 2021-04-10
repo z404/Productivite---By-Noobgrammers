@@ -185,9 +185,10 @@ def pushmsg(service, message):
         message = (service.users().messages().send(
             userId="me", body=message).execute())
         print('Message Id: %s' % message['id'])
-        return message
+        return True , None
     except Exception as e:
         print("Failed", e)
+        return False , e
 
 
 def sendemail(sender, to, subject, message_text):
@@ -215,9 +216,7 @@ def sendemail(sender, to, subject, message_text):
             token.write(creds.to_json())
 
     service = build('gmail', 'v1', credentials=creds)
-
-    pushmsg(service, {'raw': base64.urlsafe_b64encode(
-        message.as_string().encode('utf-8')).decode()})
+    return pushmsg(service, {'raw': base64.urlsafe_b64encode(message.as_string().encode('utf-8')).decode()})
 
 
 def getrecenthtml(numberofemails: int) -> list:
