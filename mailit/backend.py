@@ -30,8 +30,9 @@ def buildemail(emailreturned: dict, service) -> list:
     payld = message['payload']  # get payload of the message
     headr = payld['headers']  # get header of the payload
 
-    for one in headr:  # getting the Subject
-        if one['name'] == 'Subject':
+    for one in headr: 
+        print(one['name']) # getting the Subject
+        if one['name'] == 'Subject' or one['name'] == 'subject':
             msg_subject = one['value']
             temp_dict['Subject'] = msg_subject
 
@@ -54,7 +55,7 @@ def buildemail(emailreturned: dict, service) -> list:
             pass
 
     for three in headr:  # getting the Sender
-        if three['name'] == 'From':
+        if three['name'] == 'From' or three['name'] == 'from':
             msg_from = three['value']
             temp_dict['Sender'] = msg_from
         else:
@@ -232,8 +233,9 @@ def getrecenthtml(numberofemails: int) -> list:
     totalstring = ''
 
     for i in recentdict:
+        print(i.keys(), 'hello')
         string ="""<div class="emailRow pr"""
-        string += str(i['Priority']) + """">'
+        string += str(i['Priority']) + """">
         <div class="emailRow__options">
         <input type="checkbox" name="" id="" />
         <span class="material-icons"> star_border </span>

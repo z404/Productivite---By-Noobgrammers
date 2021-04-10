@@ -1,10 +1,9 @@
-{% extends "mailit/base.html" %}
-{% block title %}Inbox{% endblock %}
-{% block emailList__list %}
+{% extends "mailit/base.html" %} {% block title %}Inbox{% endblock %} {% block emailList__list %}
 <div class="emailList">
-    <h3>Compose Gmail</h3>
-    <form class="compose">
-        {{ form.as_ul }}
+    <h3>Compose Email</h3>
+    <form class="compose" method="POST">
+        {% csrf_token %} {{ form.as_ul }}
+        <input type="submit" value="Send">
     </form>
 </div>
 {% endblock emailList__list %}
