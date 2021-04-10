@@ -33,6 +33,13 @@ def buildemail(emailreturned: dict, service) -> list:
         if one['name'] == 'Subject':
             msg_subject = one['value']
             temp_dict['Subject'] = msg_subject
+
+            if msg_subject[0:5].lower() == 'pr1: ': temp_dict['Priority'] = 1
+            elif msg_subject[0:5].lower() == 'pr2: ': temp_dict['Priority'] = 2
+            elif msg_subject[0:5].lower() == 'pr3: ': temp_dict['Priority'] = 3
+            elif msg_subject[0:5].lower() == 'pr4: ': temp_dict['Priority'] = 4
+            elif msg_subject[0:5].lower() == 'pr5: ': temp_dict['Priority'] = 5
+            else: temp_dict['Priority'] = 6
         else:
             pass
 
@@ -208,11 +215,12 @@ def sendemail(sender, to, subject, message_text):
 
 def getrecenthtml(numberofemails: int) -> list:
     recentdict = getrecent(numberofemails)
+    totalstringlst = []
     totalstring = ''
 
     for i in recentdict:
-        print(i.keys())
-        string ="""<div class="emailRow">
+        string ="""<div class="emailRow pr"""
+        string += str(i['Priority']) + """">'
         <div class="emailRow__options">
         <input type="checkbox" name="" id="" />
         <span class="material-icons"> star_border </span>
@@ -229,9 +237,41 @@ def getrecenthtml(numberofemails: int) -> list:
         string +=i['Date']
         string += """</p></div>"""
 
-        totalstring += string
+        totalstringlst.append({"html":string,"priority":i['Priority']})
+
+    #Sorted
+    # def sortonprio(value):
+    #     return value['priority']
+    sortonprio = lambda value: value['priority']
+    totalstringlst.sort(key = sortonprio)
+    for i in totalstringlst:
+        totalstring += i['html']
     return totalstring
+
+def getuseremailid():
+    creds = None
+    # The file token.json stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
+
+    service = build('gmail', 'v1', credentials=creds)
+
+    profile = service.users().getProfile(userId='me').execute()
+    return profile['emailAddress']
 
 if __name__ == '__main__':
     # sendemail("anishr890@gmail.com","sankalpmukim@gmail.com","Does this work","please tell me it works")
-    print(getrecenthtml(2))
+    print(getrecenthtml(5))
