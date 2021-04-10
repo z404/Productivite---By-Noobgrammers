@@ -2,72 +2,76 @@
     margin: 0;
     padding: 0;
     background-color: #ccf2f4;
-  }
-  
-  /* Header */
-  .header__left img {
+}
+
+
+/* Header */
+
+.header__left img {
     object-fit: contain;
     height: 80px;
     margin-left: 5px;
-  }
-  
-  .header {
+}
+
+.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid whitesmoke;
-  }
-  
-  .header__left {
+}
+
+.header__left {
     display: flex;
     align-items: center;
-  }
-  
-  .header__left span {
+}
+
+.header__left span {
     padding: 10px;
     cursor: pointer;
-  }
-  
-  .header__middle {
+}
+
+.header__middle {
     display: flex;
     flex: 0.7;
     align-items: center;
     background-color: whitesmoke;
     padding: 10px;
     border-radius: 5px;
-  }
-  
-  .material-icons {
+}
+
+.material-icons {
     color: gray;
-  }
-  
-  .header__middle input {
+}
+
+.header__middle input {
     border: none;
     width: 100%;
     padding: 10px;
     outline: none;
     font-size: medium;
     background-color: transparent;
-  }
-  
-  .header__right {
+}
+
+.header__right {
     display: flex;
     padding-right: 20px;
-  }
-  
-  .header__right span {
+}
+
+.header__right span {
     padding: 10px;
     cursor: pointer;
-  }
-  
-  /* Sidebar */
-  .sidebar {
+}
+
+
+/* Sidebar */
+
+.sidebar {
     flex: 0.3;
     max-width: 300px;
     padding-right: 20px;
-  }
-  
-  .sidebar__compose {
+}
+
+.sidebar__compose {
     margin-top: 15px;
     margin-left: 10px;
     margin-bottom: 15px;
@@ -82,13 +86,13 @@
     outline: none;
     border: none;
     box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.75);
-  }
-  
-  .sidebar__compose span {
+}
+
+.sidebar__compose span {
     margin-right: 5px;
-  }
-  
-  .sidebarOption {
+}
+
+.sidebarOption {
     display: flex;
     align-items: center;
     height: 40px;
@@ -97,58 +101,62 @@
     border-bottom-right-radius: 20px;
     cursor: pointer;
     color: #222020;
-  }
-  
-  .sidebarOption .material-icons {
+}
+
+.sidebarOption .material-icons {
     padding: 2px;
-  }
-  
-  .sidebarOption h3 {
+}
+
+.sidebarOption h3 {
     flex: 1;
     margin-left: 10px;
     font-size: 14px;
     font-weight: 400;
-  }
-  
-  .sidebarOption:hover,
-  .sidebarOption:hover h3,
-  .sidebarOption:hover .material-icons,
-  .sidebarOption__active,
-  .sidebarOption__active h3,
-  .sidebarOption__active .material-icons {
+}
+
+.sidebarOption:hover,
+.sidebarOption:hover h3,
+.sidebarOption:hover .material-icons,
+.sidebarOption__active,
+.sidebarOption__active h3,
+.sidebarOption__active .material-icons {
     background-color: #fcecec;
     color: #c04b37;
     font-weight: 800;
-  }
-  
-  .sidebar__footer {
+}
+
+.sidebar__footer {
     display: flex;
     justify-content: center;
-  }
-  
-  .sidebar__footerIcons .material-icons {
+}
+
+.sidebar__footerIcons .material-icons {
     margin: 7px;
     cursor: pointer;
-  }
-  
-  /* main body */
-  .main__body {
+}
+
+
+/* main body */
+
+.main__body {
     display: flex;
     height: 100vh;
-  }
-  
-  body {
+}
+
+body {
     height: 100vh;
     overflow-y: hidden;
-  }
-  
-  /* email list */
-  .emailList {
+}
+
+
+/* email list */
+
+.emailList {
     flex: 1;
     overflow: scroll;
-  }
-  
-  .emailList__settings {
+}
+
+.emailList__settings {
     position: sticky;
     top: 0;
     display: flex;
@@ -157,19 +165,19 @@
     background-color: white;
     z-index: 999;
     padding: 8px;
-  }
-  
-  .emailList__settingsLeft {
+}
+
+.emailList__settingsLeft {
     display: flex;
     align-items: center;
-  }
-  
-  .emailList__settings .material-icons {
+}
+
+.emailList__settings .material-icons {
     margin: 5px;
     cursor: pointer;
-  }
-  
-  .section {
+}
+
+.section {
     display: flex;
     align-items: center;
     border-bottom-width: 2px;
@@ -178,90 +186,92 @@
     cursor: pointer;
     color: grey;
     border-width: 0;
-  }
-  
-  .emailList__sections {
+}
+
+.emailList__sections {
     position: sticky;
     top: 0;
     display: flex;
     background-color: white;
     border-bottom: 1px solid whitesmoke;
     z-index: 999;
-  }
-  
-  .section__selected {
+}
+
+.section__selected {
     background-color: whitesmoke;
     border-width: 3px;
     color: red;
     border-bottom: 3px solid red;
-  }
-  
-  .section__selected .material-icons {
+}
+
+.section__selected .material-icons {
     color: red;
-  }
-  
-  .section:hover {
+}
+
+.section:hover {
     background-color: whitesmoke;
     border-width: 3px;
-  }
-  
-  .section h4 {
+}
+
+.section h4 {
     font-size: 14px;
     margin-left: 15px;
-  }
-  
-  .emailRow__options {
+}
+
+.emailRow__options {
     display: flex;
     align-items: center;
-  }
-  
-  .emailRow__options .material-icons,
-  input {
+}
+
+.emailRow__options .material-icons,
+input {
     margin: 5px;
-  }
-  
-  .emailRow {
+}
+
+.emailRow {
     display: flex;
     align-items: center;
     height: 50px;
     border-bottom: 1px solid whitesmoke;
     cursor: pointer;
+    width: 100%;
+    border: none;
     z-index: 999;
-  }
-  
-  .emailRow:hover {
+}
+
+.emailRow:hover {
     border-top: 1px solid whitesmoke;
     box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.24);
-  }
-  
-  .emailRow__message {
+}
+
+.emailRow__message {
     display: flex;
     flex: 0.8;
     align-items: center;
     font-size: 13px;
-  }
-  
-  .emailRow__message h4 {
+}
+
+.emailRow__message h4 {
     width: 400px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-left: 5px;
     padding-right: 5px;
-  }
-  
-  .emailRow__title {
+}
+
+.emailRow__title {
     font-size: 13px;
     flex: 0.3;
-  }
-  
-  .emailRow__time {
+}
+
+.emailRow__time {
     padding-right: 15px;
     font-size: 10px;
     font-weight: bold;
-  }
-  
-  .emailRow__description {
+}
+
+.emailRow__description {
     font-weight: 400;
     color: gray;
-  }
+}

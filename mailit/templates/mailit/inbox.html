@@ -1,7 +1,5 @@
-{% extends "mailit/base.html" %}
-{% block title %}Inbox{% endblock %}
-{% block emailList__list %}
-{% autoescape off %}
-{{ emails }}
-{% endautoescape %}
-{% endblock emailList__list %}
+{% extends "mailit/base.html" %} {% block title %}Inbox{% endblock %} {% block emailList__list %} {% autoescape off %}
+<form action="../viewemail/" method="post">
+    {% csrf_token %} {{ emails }}
+</form>
+{% endautoescape %} {% endblock emailList__list %}
