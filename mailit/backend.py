@@ -34,7 +34,7 @@ def buildemail(emailreturned: dict, service) -> list:
     headr = payld["headers"]  # get header of the payload
 
     for one in headr:
-        print(one["name"])  # getting the Subject
+        # print(one["name"])  # getting the Subject
         if one["name"] == "Subject" or one["name"] == "subject":
             msg_subject = one["value"]
             temp_dict["Subject"] = msg_subject
@@ -244,7 +244,7 @@ def getrecenthtml(numberofemails: int) -> list:
     totalstring = ""
 
     for i in recentdict:
-        print(i.keys(), 'hello')
+        # print(i.keys(), 'hello')
         string ="""<button class="emailRow pr"""
         string += str(i['Priority']) + " " 
         string += i['Status']+'" type="submit" value="'
@@ -265,7 +265,7 @@ def getrecenthtml(numberofemails: int) -> list:
                     <p class="emailRow__time">"""
         string += i['Date']
         string += """</p></button>"""
-        print(string)
+        # print(string)
         totalstringlst.append({"html": string, "priority": i["Priority"]})
 
     # Sorted
