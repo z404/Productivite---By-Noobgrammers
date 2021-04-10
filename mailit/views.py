@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from backend import getrecent
+from .backend import getrecent
 
 
 def inbox(request):
-    return render(request, 'inbox.html', {
+    return render(request, 'mailit/inbox.html', {
         'emails': getrecent(10)
     })
 
