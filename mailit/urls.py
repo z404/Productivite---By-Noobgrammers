@@ -7,5 +7,5 @@ urlpatterns = [
     path("inbox/", views.inbox, name="inbox"),
     path("test/", views.test, name="test"),
     path("compose/", views.compose, name="compose"),
-    path("viewmail/", views.viewemail, name="viewmail"),
+    path("viewemail/", views.viewemail, name="viewemail"),
 ]

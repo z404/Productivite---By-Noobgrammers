@@ -23,7 +23,8 @@ SCOPES = [
 def buildemail(emailreturned: dict, service) -> list:
     """x"""
     temp_dict = {}
-    m_id = emailreturned["id"]  # get id of individual message
+    m_id = emailreturned["id"]
+    temp_dict['idemail'] = m_id  # get id of individual message
     message = service.users().messages().get(userId="me", id=m_id).execute()
     if "UNREAD" in message["labelIds"]:
         temp_dict["Status"] = "UNREAD"
@@ -246,13 +247,14 @@ def getrecenthtml(numberofemails: int) -> list:
         print(i.keys(), 'hello')
         string ="""<button class="emailRow pr"""
         string += str(i['Priority']) + " " 
-        string += i['Status']+"""">
+        string += i['Status']+'" type="submit" value="'
+        string += i['idemail'] + """" name="emailid" onclick="location.href = '../viewemail'">
         <div class="emailRow__options">
         <input type="checkbox" name="" id="" />
         <span class="material-icons"> star_border </span>
         <span class="material-icons"> label_important </span>
         </div><h3 class="emailRow__title">"""
-        )
+
         string += i["Sender"]
         string += """</h3><div class="emailRow__message">
         <h4>"""
@@ -262,8 +264,8 @@ def getrecenthtml(numberofemails: int) -> list:
         string += """</span></h4></div>
                     <p class="emailRow__time">"""
         string += i['Date']
-        string += """</p></button></a>"""
-
+        string += """</p></button>"""
+        print(string)
         totalstringlst.append({"html": string, "priority": i["Priority"]})
 
     # Sorted

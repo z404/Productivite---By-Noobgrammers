@@ -1,7 +1,10 @@
-{% extends "mailit/base.html" %}
-{% block title %}{{Subject}}{% endblock %}
-{% block emailList__list %}
-{% autoescape off %}
-<!-- Put html here -->
-{% endautoescape %}
-{% endblock emailList__list %}
+{% extends "mailit/base.html" %} {% block title %}{{Subject}}{% endblock %} {% block emailList__list %} {% autoescape off %}
+<div class="emailList">
+    <h2 class="subject">{{ Subject }}</h2>
+    <div class="compose">
+        <br>
+        <h3 class="sender">{{ Sender }}</h3>
+        <p class="message_body">{{ Message_body }}</p>
+    </div>
+</div>
+{% endautoescape %} {% endblock emailList__list %}
