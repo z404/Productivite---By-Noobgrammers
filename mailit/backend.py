@@ -14,22 +14,23 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.send']
+SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
+          'https://www.googleapis.com/auth/gmail.send']
+
 
 def buildemail(emailreturned: dict, service) -> list:
     '''x'''
     temp_dict = {}
-    m_id = emailreturned['id'] # get id of individual message
+    m_id = emailreturned['id']  # get id of individual message
     message = service.users().messages().get(userId="me", id=m_id).execute()
     if 'UNREAD' in message['labelIds']:
         temp_dict['Status'] = 'UNREAD'
     else:
         temp_dict['Status'] = 'READ'
-    payld = message['payload'] # get payload of the message 
-    headr = payld['headers'] # get header of the payload
+    payld = message['payload']  # get payload of the message
+    headr = payld['headers']  # get header of the payload
 
-
-    for one in headr: # getting the Subject
+    for one in headr:  # getting the Subject
         if one['name'] == 'Subject':
             msg_subject = one['value']
             temp_dict['Subject'] = msg_subject
@@ -43,8 +44,7 @@ def buildemail(emailreturned: dict, service) -> list:
         else:
             pass
 
-
-    for two in headr: # getting the date
+    for two in headr:  # getting the date
         if two['name'] == 'Date':
             msg_date = two['value']
             date_parse = (parser.parse(msg_date))
@@ -53,7 +53,7 @@ def buildemail(emailreturned: dict, service) -> list:
         else:
             pass
 
-    for three in headr: # getting the Sender
+    for three in headr:  # getting the Sender
         if three['name'] == 'From':
             msg_from = three['value']
             temp_dict['Sender'] = msg_from
@@ -63,21 +63,25 @@ def buildemail(emailreturned: dict, service) -> list:
     temp_dict['Snippet'] = message['snippet']
 
     try:
-    
+
         # Fetching message body
-        mssg_parts = payld['parts'] # fetching the message parts
-        part_one  = mssg_parts[0] # fetching first element of the part 
-        part_body = part_one['body'] # fetching body of the message
-        part_data = part_body['data'] # fetching data from the body
-        clean_one = part_data.replace("-","+") # decoding from Base64 to UTF-8
-        clean_one = clean_one.replace("_","/") # decoding from Base64 to UTF-8
-        clean_two = base64.b64decode (bytes(clean_one, 'UTF-8')) # decoding from Base64 to UTF-8
+        mssg_parts = payld['parts']  # fetching the message parts
+        part_one = mssg_parts[0]  # fetching first element of the part
+        part_body = part_one['body']  # fetching body of the message
+        part_data = part_body['data']  # fetching data from the body
+        # decoding from Base64 to UTF-8
+        clean_one = part_data.replace("-", "+")
+        # decoding from Base64 to UTF-8
+        clean_one = clean_one.replace("_", "/")
+        # decoding from Base64 to UTF-8
+        clean_two = base64.b64decode(bytes(clean_one, 'UTF-8'))
         temp_dict['Message_body'] = clean_two
 
-    except :
+    except:
         pass
 
     return temp_dict
+
 
 def getunread(numberofemails: int) -> list:
     """Shows basic usage of the Gmail API.
@@ -104,15 +108,17 @@ def getunread(numberofemails: int) -> list:
             token.write(creds.to_json())
 
     service = build('gmail', 'v1', credentials=creds)
-    unread_msgs = service.users().messages().list(userId='me',labelIds=['INBOX','UNREAD']).execute()
-    
+    unread_msgs = service.users().messages().list(
+        userId='me', labelIds=['INBOX', 'UNREAD']).execute()
+
     for i in unread_msgs['messages']:
-        count+=1
+        count += 1
 
         finallist.append(buildemail(i, service))
         if count == numberofemails:
             return finallist
-    
+
+
 def getread(numberofemails: int) -> list:
     count = 0
     finallist = []
@@ -135,15 +141,17 @@ def getread(numberofemails: int) -> list:
             token.write(creds.to_json())
 
     service = build('gmail', 'v1', credentials=creds)
-    unread_msgs = service.users().messages().list(userId='me',q="label:read").execute()
-    
+    unread_msgs = service.users().messages().list(
+        userId='me', q="label:read").execute()
+
     for i in unread_msgs['messages']:
         dicti = buildemail(i, service)
         if 'Subject' in dicti.keys():
             finallist.append(dicti)
-            count+=1
+            count += 1
         if count == numberofemails:
             return finallist
+
 
 def getrecent(numberofemails: int) -> list:
     count = 0
@@ -167,23 +175,28 @@ def getrecent(numberofemails: int) -> list:
             token.write(creds.to_json())
 
     service = build('gmail', 'v1', credentials=creds)
-    unread_msgs = service.users().messages().list(userId='me',labelIds=['INBOX']).execute()
+    unread_msgs = service.users().messages().list(
+        userId='me', labelIds=['INBOX']).execute()
 
     for i in unread_msgs['messages']:
-        count+=1
+        count += 1
 
         finallist.append(buildemail(i, service))
         if count == numberofemails:
             return finallist
 
+
 def pushmsg(service, message):
     '''x'''
     try:
-        message = (service.users().messages().send(userId="me", body=message).execute())
+        message = (service.users().messages().send(
+            userId="me", body=message).execute())
         print('Message Id: %s' % message['id'])
         return True , None
     except Exception as e:
+        print("Failed", e)
         return False , e
+
 
 def sendemail(sender, to, subject, message_text):
     message = MIMEText(message_text)
@@ -210,8 +223,8 @@ def sendemail(sender, to, subject, message_text):
             token.write(creds.to_json())
 
     service = build('gmail', 'v1', credentials=creds)
-
     return pushmsg(service, {'raw': base64.urlsafe_b64encode(message.as_string().encode('utf-8')).decode()})
+
 
 def getrecenthtml(numberofemails: int) -> list:
     recentdict = getrecent(numberofemails)
@@ -234,8 +247,8 @@ def getrecenthtml(numberofemails: int) -> list:
         string += i['Snippet']
         string += """</span></h4></div>
                     <p class="emailRow__time">"""
-        string +=i['Date']
-        string += """</p></div>"""
+        string += i['Date']
+        string += """</p></div></a>"""
 
         totalstringlst.append({"html":string,"priority":i['Priority']})
 
