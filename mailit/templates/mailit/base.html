@@ -6,18 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google Font Icons -->
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/gif" sizes="16x16">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'mailit/styles.css' %}" />
-    <title>{% block title %}Gmail{% endblock title %}</title>
+    <title>{% block title %}Productivité{% endblock title %}</title>
 </head>
 
 <body>
+    <div class="wrapper">
+
     <!-- Header Starts -->
     <div class="header">
         {% block header %}
-        <div class="header__left">
-            <span class="material-icons"> menu </span>
-            <img src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png" alt="" />
+        <div  class="header__left">
+            <span class="material-icons">menu </span>
+            <img src="{%static 'productivité.png' %}" alt="" />
         </div>
 
         <div class="header__middle">
@@ -38,9 +41,11 @@
     <!-- Main Body Starts -->
     <div class="main__body">
         <!-- Sidebar Starts -->
-        <div class="sidebar">
+        <div id="sidebar" class="sidebar">
             {% block sidebar %}
+
             <a href="/app/compose" style="text-decoration: none" ;><button class="sidebar__compose"><span class="material-icons"> add </span>Compose</button></a>
+
             <div class="sidebarOption sidebarOption__active">
 
                 <span class="material-icons"> inbox </span>
@@ -105,6 +110,7 @@
                 {% endblock settings %}
             </div>
             <!-- Settings Ends -->
+            <div class="content">
 
             <!-- Section Starts -->
             <div class="emailList__sections">
@@ -126,6 +132,7 @@
                 {% endblock emailList__sections %}
             </div>
             <!-- Section Ends -->
+
 
             <!-- Email List rows starts -->
             <div class="emailList__list">
@@ -177,6 +184,8 @@
         </div>
         <!-- Email List Ends -->
     </div>
+    </div>
+</div>
     <!-- Main Body Ends -->
 </body>
 
