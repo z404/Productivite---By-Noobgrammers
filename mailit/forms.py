@@ -1,11 +1,10 @@
 from django import forms
-# from .backend import getuseremailid
+from .backend import getuseremailid
 
 
 class ComposeForm(forms.Form):
-    sender = forms.EmailField(
-        initial='example@example.com', auto_id=True, label='Sender:'help_text='Your email address, please.', disabled=True)
-    reciever = forms.EmailField(
-        auto_id=True, label='Reciever', help_text='A valid email address, please.')
-    cc = forms.EmailField(auto_id=True, required=False, label='CC')
-    content = forms.Textarea(attrs={})
+    sender = forms.EmailField(initial=getuseremailid(), label='Sender:', disabled=True)
+    receiver = forms.EmailField(label='Receiver')
+    subject = forms.CharField(max_length=120, label = "Subject")
+    #cc = forms.EmailField( required=False, label='CC')
+    message = forms.CharField(widget=forms.Textarea(attrs={"name":"message"}))

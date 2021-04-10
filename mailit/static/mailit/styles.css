@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    background-color: #ccf2f4;
   }
   
   /* Header */
@@ -74,7 +75,7 @@
     color: gray;
     padding: 15px;
     border-radius: 30px;
-    background-color: white;
+    background-color: #a4ebf3;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -95,11 +96,11 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     cursor: pointer;
-    color: #818181;
+    color: #222020;
   }
   
   .sidebarOption .material-icons {
-    padding: 5px;
+    padding: 2px;
   }
   
   .sidebarOption h3 {
