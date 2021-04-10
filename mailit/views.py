@@ -9,6 +9,6 @@ def inbox(request):
 
 
 def test(request):
-    return render(request, 'base.html')
+    return render(request, 'mailit/base.html')
 
 
