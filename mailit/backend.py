@@ -234,8 +234,9 @@ def getrecenthtml(numberofemails: int) -> list:
 
     for i in recentdict:
         print(i.keys(), 'hello')
-        string ="""<div class="emailRow pr"""
-        string += str(i['Priority']) + """">
+        string ="""<button class="emailRow pr"""
+        string += str(i['Priority']) + " " 
+        string += i['Status']+"""">
         <div class="emailRow__options">
         <input type="checkbox" name="" id="" />
         <span class="material-icons"> star_border </span>
@@ -245,12 +246,12 @@ def getrecenthtml(numberofemails: int) -> list:
         string += """</h3><div class="emailRow__message">
         <h4>"""
         string += i['Subject']
-        string += """<span class="emailRow__description">"""
+        string += """<span class="emailRow__description">  """
         string += i['Snippet']
         string += """</span></h4></div>
                     <p class="emailRow__time">"""
         string += i['Date']
-        string += """</p></div></a>"""
+        string += """</p></button></a>"""
 
         totalstringlst.append({"html":string,"priority":i['Priority']})
 
