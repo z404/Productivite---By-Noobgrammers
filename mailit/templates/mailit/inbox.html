@@ -1,7 +1,7 @@
 {% extends "mailit/base.html" %}
 {% block title %}Inbox{% endblock %}
 {% block emailList__list %}
-{% for item in email %}
-{{item}}
-{% endfor %}
+{% autoescape off %}
+{{ emails }}
+{% endautoescape %}
 {% endblock emailList__list %}

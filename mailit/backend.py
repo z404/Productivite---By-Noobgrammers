@@ -2,16 +2,16 @@
 
 from __future__ import print_function
 
+import base64
 import os.path
+from email.mime.text import MIMEText
 
+import dateutil.parser as parser
+from bs4 import BeautifulSoup
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-import dateutil.parser as parser
-from bs4 import BeautifulSoup
-import base64
-from email.mime.text import MIMEText
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.send']
@@ -21,7 +21,10 @@ def buildemail(emailreturned: dict, service) -> list:
     temp_dict = {}
     m_id = emailreturned['id'] # get id of individual message
     message = service.users().messages().get(userId="me", id=m_id).execute()
-
+    if 'UNREAD' in message['labelIds']:
+        temp_dict['Status'] = 'UNREAD'
+    else:
+        temp_dict['Status'] = 'READ'
     payld = message['payload'] # get payload of the message 
     headr = payld['headers'] # get header of the payload
 
@@ -103,6 +106,38 @@ def getunread(numberofemails: int) -> list:
         if count == numberofemails:
             return finallist
     
+def getread(numberofemails: int) -> list:
+    count = 0
+    finallist = []
+    creds = None
+    # The file token.json stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
+
+    service = build('gmail', 'v1', credentials=creds)
+    unread_msgs = service.users().messages().list(userId='me',q="label:read").execute()
+    
+    for i in unread_msgs['messages']:
+        dicti = buildemail(i, service)
+        if 'Subject' in dicti.keys():
+            finallist.append(dicti)
+            count+=1
+        if count == numberofemails:
+            return finallist
+
 def getrecent(numberofemails: int) -> list:
     count = 0
     finallist = []
@@ -171,5 +206,32 @@ def sendemail(sender, to, subject, message_text):
 
     pushmsg(service, {'raw': base64.urlsafe_b64encode(message.as_string().encode('utf-8')).decode()})
 
+def getrecenthtml(numberofemails: int) -> list:
+    recentdict = getrecent(numberofemails)
+    totalstring = ''
+
+    for i in recentdict:
+        print(i.keys())
+        string ="""<div class="emailRow">
+        <div class="emailRow__options">
+        <input type="checkbox" name="" id="" />
+        <span class="material-icons"> star_border </span>
+        <span class="material-icons"> label_important </span>
+        </div><h3 class="emailRow__title">"""
+        string += i['Sender']
+        string += """</h3><div class="emailRow__message">
+        <h4>"""
+        string += i['Subject']
+        string += """<span class="emailRow__description">"""
+        string += i['Snippet']
+        string += """</span></h4></div>
+                    <p class="emailRow__time">"""
+        string +=i['Date']
+        string += """</p></div>"""
+
+        totalstring += string
+    return totalstring
+
 if __name__ == '__main__':
-    sendemail("anishr890@gmail.com","sankalpmukim@gmail.com","Does this work","please tell me it works")
+    # sendemail("anishr890@gmail.com","sankalpmukim@gmail.com","Does this work","please tell me it works")
+    print(getrecenthtml(2))
