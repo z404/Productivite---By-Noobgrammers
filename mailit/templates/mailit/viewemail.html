@@ -1,0 +1,7 @@
+{% extends "mailit/base.html" %}
+{% block title %}{{Subject}}{% endblock %}
+{% block emailList__list %}
+{% autoescape off %}
+<!-- Put html here -->
+{% endautoescape %}
+{% endblock emailList__list %}
