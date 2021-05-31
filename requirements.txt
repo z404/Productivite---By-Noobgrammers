@@ -11,7 +11,7 @@ click==7.1.2
 Django==3.2.1
 Flask==1.1.2
 google-api-core==1.26.3
-google-api-python-client==2.2.0
+google-api-python-client==2.3.0
 google-auth==1.30.0
 google-auth-httplib2==0.1.0
 google-auth-oauthlib==0.4.4
