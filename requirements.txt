@@ -10,7 +10,7 @@ chardet==4.0.0
 click==7.1.2
 Django==3.2.1
 Flask==2.0.1
-google-api-core==1.26.3
+google-api-core==1.30.0
 google-api-python-client==2.10.0
 google-auth==1.30.0
 google-auth-httplib2==0.1.0
